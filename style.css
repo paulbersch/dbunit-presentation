@@ -4,11 +4,11 @@ pre code.hljs {
 }
 
 .reveal .slides {
-    width: 100% !important;
-    height: 100% !important;
+    width: 90% !important;
+    height: 90% !important;
 }
 
 .reveal pre code {
-    max-height: 80% !important;
-    min-height: 100% !important;
+    max-height: 90% !important;
+    min-height: 50% !important;
 }

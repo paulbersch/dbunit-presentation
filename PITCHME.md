@@ -81,7 +81,7 @@ YAML is your friend. No need to write any models.
 ---?code=code/fixture.yml
 
 @[1](Table names on top level)
-@[2-6](Any omitted columns will be set to their default values)
+@[2-6](Omitted columns will be set to schema default)
 @[32](Leave a table empty to truncate it)
 @[46](Leave a field empty to set it to NULL)
 
@@ -116,6 +116,10 @@ Every test that extends `HostedDbTestCase` needs to set a `$fixturePath`. The te
             ├── TestSyncAccountUpdateAudience-dd-response.json
             └── TestSyncAccountUpdateAudience-expected.yml
 ```
+
+@[1-2](Test cases!)
+@[3-6](Tests follow the directory structure of the app)
+@[8-17](Fixtures also follow directory structure of the app)
 
 #HSLIDE
 

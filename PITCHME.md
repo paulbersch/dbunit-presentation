@@ -28,7 +28,7 @@ In a perfect world, code is broken up into discrete functions with no side-effec
 
 #HSLIDE
 
-But in real life we have [https://github.com/ActiveCampaign/Hosted/blob/version-8.12/admin/functions/series.php#L1682](less testable code).
+But in real life we have [less testable code](https://github.com/ActiveCampaign/Hosted/blob/version-8.12/admin/functions/series.php#L1682).
 
 #HSLIDE
 
@@ -42,9 +42,7 @@ These aren't _really_ unit tests. They're not exactly integration tests, either.
 
 #HSLIDE
 
-### New toys
-
-PHP-DI Service Container
+### PHP-DI Service Container
 
 Provides a path towards eliminating globally defined resources and testing code that is untestable 
 

@@ -1,5 +1,4 @@
-DBUnit and PHPUnit in Hosted
-----------------------------
+# DBUnit and PHPUnit in Hosted
 
 #HSLIDE
 
@@ -8,14 +7,13 @@ DBUnit and PHPUnit in Hosted
 
 #HSLIDE
 
-NO!
+## NO!
 
 Testing gives us the confidence to make changes in our architecture.
 
 #HSLIDE
 
-What is unit testing?
-=====================
+## What is unit testing?
 
 Testing your code function by function, in isolation, to verify that the code meets tightly defined requirements.
 
@@ -23,8 +21,7 @@ Ideally.
 
 #HSLIDE
 
-In a perfect world
-==================
+### In a perfect world
 
 ---?code=code/ideal.php
 

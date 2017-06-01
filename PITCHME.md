@@ -32,13 +32,63 @@ But in real life we have [less testable code](https://github.com/ActiveCampaign/
 
 #HSLIDE
 
-###How do we test global functions?
+### Writing a DBUnit Test
 
+1. Set up fixture (`getDataset`)
+2. Exercise System Under Test
+3. Verify outcome
+4. Teardown
 
+However, it won't actually truncate everything in the database for you, so make sure you define empty tables for anything you're expecting to be empty.
+
+#HSLIDE
+
+### Defining fixture data
+
+---?code=code/fixture.yml
+
+#HSLIDE
+
+### Test fixtures
+
+If you're using
+
+#HSLIDE
+
+### Where do things go?
+
+```
+├── HostedDbTestCase.php
+├── HostedTestCase.php
+├── ac_global
+│   └── functions
+│       └── strTest.php
+├── admin
+│   └── classes
+│       └── FbAudienceSyncTest.php
+├── engine.inc.php
+└── fixtures
+    └── admin
+        └── classes
+            ├── FbAudienceSyncTest.yml
+            ├── TestDeleteAudienceIfRemovedInFacebook-dd-response.json
+            ├── TestDeleteAudienceIfRemovedInFacebook-expected.yml
+            ├── TestSyncAccountFirstTime-dd-response.json
+            ├── TestSyncAccountFirstTime-expected.yml
+            ├── TestSyncAccountUpdateAudience-dd-response.json
+            └── TestSyncAccountUpdateAudience-expected.yml
+```
 
 #HSLIDE
 
 These aren't _really_ unit tests. They're not exactly integration tests, either. But they're a solid step towards defining behavior and giving us a path towards refactoring parts of our app we can't easily change.
+
+#HSLIDE
+
+###How do we test global functions?
+
+`¯\_(ツ)_/¯`
+
 
 #HSLIDE
 
@@ -79,9 +129,9 @@ $container->set(DeepDataClient::class, $mockedDeepDataClient);
 
 #HSLIDE
 
-### Old code
+Old code
 
-```
+```php
 public static $_static_table  = "_account.accounts";
 
 public function __construct($row = array()) {
@@ -103,9 +153,9 @@ public static function myself() {
 }
 ```
 
-### New code (maybe)
+New code (maybe)
 
-```
+```php
 [
         Account::class => DI\Factory(function ($row) {
                 // you can easily change this config in a test context

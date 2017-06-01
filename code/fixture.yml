@@ -1,0 +1,42 @@
+em_subscriber:
+  -
+    id: 1234
+    first_name: Paul
+    last_name: Bersch
+    email: pbersch@activecampaign.com
+
+em_series:
+  -
+    id: 4444
+    name: My Facebook Series
+    status: 1
+    entered: 10
+    exited: 10
+    hidden: 0
+
+em_series_block:
+  -
+    id: 2222
+    seriesid: 4444
+    parentid: 2222
+    ordernum: 0
+    type: 'addfbcontact'
+    params: '{"audienceid": 9999}'
+    deleted: 0
+
+em_subscriber_series:
+
+em_subscriber_series_log:
+
+em_dc_connection:
+
+em_fb_audience:
+  -
+    id: 9999
+    externalid: 1234567
+    accountid: 987654
+    name: A good test audience that exists
+    description: Good. A test audience.
+    approx_count: 20
+    deleted:
+    deleted_reason:

@@ -4,6 +4,11 @@ em_subscriber:
     first_name: Paul
     last_name: Bersch
     email: pbersch@activecampaign.com
+  -
+    id: 5678
+    first_name: Alexis
+    last_name: Jennings
+    email: ajennings@activecampaign.com
 
 em_series:
   -

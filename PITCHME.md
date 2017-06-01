@@ -76,7 +76,14 @@ However, it won't actually truncate everything in the database for you, so make 
 
 ### Defining fixture data
 
+YAML is your friend. No need to write any models.
+
 ---?code=code/fixture.yml
+
+@[1](Table names on top level)
+@[2-6](Any omitted columns will be set to their default values)
+@[32](Leave a table empty to truncate it)
+@[46](Leave a field empty to set it to NULL)
 
 #HSLIDE
 

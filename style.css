@@ -4,5 +4,10 @@ pre code.hljs {
 }
 
 .reveal .slides {
-    width: 100%;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.reveal pre code {
+    max-height: initial !important;
 }

@@ -4,6 +4,7 @@ pre code.hljs {
 }
 
 .reveal .slides {
+    margin-top: -10% !important;
     width: 90% !important;
     height: 90% !important;
 }

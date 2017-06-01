@@ -13,8 +13,5 @@ pre code.hljs {
 }
 
 .reveal pre code {
-    /*
-    max-height: 80% !important;
-    min-height: 50% !important;
-    */
+    max-height: 700px !important;
 }

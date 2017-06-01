@@ -118,8 +118,8 @@ Every test that extends `HostedDbTestCase` needs to set a `$fixturePath`. The te
 ```
 
 @[1-2](Test cases!)
-@[3-6](Tests follow the directory structure of the app)
-@[8-17](Fixtures also follow directory structure of the app)
+@[3-8](Tests follow the directory structure of the app)
+@[10-19](Fixtures also follow directory structure of the app)
 
 #HSLIDE
 

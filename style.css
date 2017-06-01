@@ -4,14 +4,15 @@ pre code.hljs {
 }
 
 .reveal .present {
-/*    margin-top: -10% !important;*/
+/*    margin-top: -10% !important;
     width: 90% !important;
     height: 80% !important;
+*/
 }
 
 .reveal .slides {
 }
 
 .reveal pre code {
-    max-height: 700px !important;
+    max-height: 600px !important;
 }

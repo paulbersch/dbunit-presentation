@@ -10,17 +10,28 @@ It is too risky to change this code!
 
 ## NO!
 
-Testing gives us the confidence to make changes in our architecture.
+Testing gives us the confidence to make changes in our architecture and is essential to allowing us to modernize key parts of our application (e.g. automations, contacts, segments).
+
+#HSLIDE
+
+### Reasons we "can't" test PHP code in Hosted
+
+ - there isn't an easy entry point from an API call (or if there is, it's not isolated enough)
+ - we depend on global state, especially weird stuff in `engine` and `prepend`
+ - database interactions in a code path are complex
+ - the code calls an external service or has a side-effect (e.g. sending an email)
+
+#HSLIDE
+
+A lot of our most important code is [difficult to test](https://github.com/ActiveCampaign/Hosted/blob/version-8.12/admin/functions/series.php#L1682).
 
 #HSLIDE
 
 ## What is unit testing?
 
-Testing your code function by function, in isolation, to verify that the code meets tightly defined requirements.
+Testing your code in *isolated* chunks to verify that the code meets *tightly defined* requirements.
 
-Ideally.
-
-#HSLIDE
+(Ideally)
 
 In a perfect world, code is broken up into discrete functions with no side-effects and no global dependencies.
 
@@ -28,7 +39,27 @@ In a perfect world, code is broken up into discrete functions with no side-effec
 
 #HSLIDE
 
-But in real life we have [less testable code](https://github.com/ActiveCampaign/Hosted/blob/version-8.12/admin/functions/series.php#L1682).
+### PHPUnit / DBUnit
+
+A new tool in our toolbox for testing Hosted code.
+
+Allows you to write tests that interact with a real database and isolate code that previously couldn't be effectively touched by Behat tests.
+
+#HSLIDE
+
+### HostedTestCase
+
+Bootstraps the application, including required global state, global functions, and services like memcache. Use if you need to use global functions but don't need to set up any fixtures.
+
+### HostedDbTestCase
+
+Includes everything HostedTestCase does, but also includes DBUnit test methods and provides a facility for loading fixtures with initial test data.
+
+#HSLIDE
+
+Tests using these classes aren't _really_ unit tests. They're not exactly integration tests, either. But they're a solid step towards defining behavior and giving us a path towards refactoring parts of our app we can't easily change.
+
+*Endeavor to write code that can be unit tested without using either of these classes*
 
 #HSLIDE
 
@@ -49,9 +80,9 @@ However, it won't actually truncate everything in the database for you, so make 
 
 #HSLIDE
 
-### Test fixtures
+### Test Fixtures for Initial State
 
-If you're using
+Every test that extends `HostedDbTestCase` needs to set a `$fixturePath`. The test class will look for and automatically load either a fixture named after the test method currently being run (myTestMethod.yml) or after the test class (MyTestClass.yml).
 
 #HSLIDE
 
@@ -81,14 +112,28 @@ If you're using
 
 #HSLIDE
 
-These aren't _really_ unit tests. They're not exactly integration tests, either. But they're a solid step towards defining behavior and giving us a path towards refactoring parts of our app we can't easily change.
+### Making assertions against the database
+
+```php
+$actualDataset = $this->getConnection()->createQueryTable(
+    'em_fb_audience',
+    'SELECT id, externalid, accountid, name, description, approx_count, deleted, deleted_reason FROM em_fb_audience'
+);
+
+$expectedDataset = new PHPUnit_Extensions_Database_DataSet_YamlDataSet(
+    $this->fixturePath . $expectedStateFixture
+);
+
+static::assertTablesEqual($expectedDataset->getTable("em_fb_audience"), $actualDataset);
+```
+
+This is extremely useful for testing state that normally isn't exposed in the API.
 
 #HSLIDE
 
 ###How do we test global functions?
 
 `¯\_(ツ)_/¯`
-
 
 #HSLIDE
 
@@ -182,7 +227,6 @@ New code (maybe)
 // by default this is a singleton, you'll always get the same instance
 $account = $container->get(Account::class);
 ```
-
 
 #HSLIDE
 

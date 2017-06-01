@@ -15,4 +15,5 @@ pre code.hljs {
 
 .reveal pre code {
     max-height: 600px !important;
+    max-width: 900px !important;
 }

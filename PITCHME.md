@@ -238,7 +238,7 @@ public static function myself() {
 @[3-10](Workarounds and globals for different environments)
 @[12-19](Using globals as a cache)
 
-#VSLIDE
+#HSLIDE
 
 Just an example, don't @ me
 

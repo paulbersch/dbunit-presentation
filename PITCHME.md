@@ -140,10 +140,9 @@ static::assertTablesEqual($expectedDataset->getTable("em_fb_audience"), $actualD
 ```
 
 @[1-4](You can query the database to create a dataset DBUnit understands)
-@[6-9](You can also load fixtures to use for comparisons)
-@[11](The test class includes functions for comparing these datasets)
-@[1-11](This is extremely useful for testing state that normally isn't exposed in the API.)
-
+@[6-8](You can also load fixtures to use for comparisons)
+@[10](The test class includes functions for comparing these datasets)
+@[1-10](This is extremely useful for testing state that normally isn't exposed in the API.)
 
 #HSLIDE
 

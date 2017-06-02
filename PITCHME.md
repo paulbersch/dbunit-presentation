@@ -210,8 +210,6 @@ $container->set(DeepDataClient::class, $mockedDeepDataClient);
 
 #HSLIDE
 
-Moving away from global resources
-
 ```php
 public static $_static_table  = "_account.accounts";
 
@@ -239,8 +237,6 @@ public static function myself() {
 @[12-19](Using globals as a cache)
 
 #HSLIDE
-
-Just an example, don't @ me
 
 ```php
 [

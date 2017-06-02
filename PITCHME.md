@@ -281,7 +281,7 @@ $account = $container->get(Account::class);
 
 #HSLIDE
 
-### What can I do today
+### What can I do today?
 
 PHPUnit/DBUnit will be merged in as soon as someone clicks merge on my PR.
 

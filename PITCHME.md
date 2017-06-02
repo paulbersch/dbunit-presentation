@@ -119,6 +119,7 @@ Every test that extends `HostedDbTestCase` needs to set a `$fixturePath`. The te
 
 @[1-2](Test cases!)
 @[3-8](Tests follow the directory structure of the app)
+@[9](Boo! Hiss!)
 @[10-19](Fixtures also follow directory structure of the app)
 
 #HSLIDE
@@ -138,7 +139,11 @@ $expectedDataset = new PHPUnit_Extensions_Database_DataSet_YamlDataSet(
 static::assertTablesEqual($expectedDataset->getTable("em_fb_audience"), $actualDataset);
 ```
 
-This is extremely useful for testing state that normally isn't exposed in the API.
+@[1-4](You can query the database to create a dataset DBUnit understands)
+@[6-9](You can also load fixtures to use for comparisons)
+@[11](The test class includes functions for comparing these datasets)
+@[1-11](This is extremely useful for testing state that normally isn't exposed in the API.)
+
 
 #HSLIDE
 

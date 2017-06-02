@@ -168,6 +168,8 @@ $this->assertEquals(4, $this->getConnection()->getRowCount("em_fb_audience"));
 
 `¯\_(ツ)_/¯`
 
+Let's look at an example!
+
 #HSLIDE
 
 ### PHP-DI Service Container

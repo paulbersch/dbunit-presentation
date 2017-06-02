@@ -275,13 +275,17 @@ $account = $container->get(Account::class);
 
 ### How should I test this?
 
-PHPUnit/DBUnit will be merged in as soon as someone clicks merge on my PR.
-
-PHP-DI Container will be coming along with tests for automations.
-
 1. For new code, write testable classes with injected dependencies, and unit test them.
 2. For v3 API endpoints, write Behat tests and consider unit tests for business logic.
 3. For everything else, there's HostedTestCase and HostedDbTestCase (tm)
+
+#HSLIDE
+
+### What can I do today
+
+PHPUnit/DBUnit will be merged in as soon as someone clicks merge on my PR.
+
+PHP-DI Container will be coming along with tests for automations.
 
 #HSLIDE
 

@@ -1,10 +1,14 @@
-# DBUnit and PHPUnit in Hosted
+## DBUnit and PHPUnit in Hosted
+and more broadly
+### Evolving the codebase with the aid of testing
 
 #HSLIDE
 
-This code is untestable!
+### The vicious circle of uncertainty
 
-It is too risky to change this code!
+We can't test this code until we change it!
+
+It is too risky to change this code because we don't have tests!
 
 #HSLIDE
 
@@ -18,12 +22,8 @@ Testing gives us the confidence to make changes in our architecture and is essen
 
  - there isn't an easy entry point from an API call (or if there is, it's not isolated enough)
  - we depend on global state, especially weird stuff in `engine` and `prepend`
- - database interactions in a code path are complex
+ - database interactions in a code path are complex, or the queries are deeply tied into the business logic
  - the code calls an external service or has a side-effect (e.g. sending an email)
-
-#HSLIDE
-
-A lot of our most important code is [difficult to test](https://github.com/ActiveCampaign/Hosted/blob/version-8.12/admin/functions/series.php#L1682).
 
 #HSLIDE
 
@@ -33,9 +33,13 @@ Testing your code in *isolated* chunks to verify that the code meets *tightly de
 
 (Ideally)
 
-In a perfect world, code is broken up into discrete functions with no side-effects and no global dependencies.
+In a perfect world, code is broken up into discrete functions with no side-effects and no global dependencies, and unit testing creates a virtuous cycle where tests identify parts of your in-progress work that needs to be refactored.
 
 ---?code=code/ideal.php
+
+#HSLIDE
+
+A lot of our most important code is [difficult to test](https://github.com/ActiveCampaign/Hosted/blob/version-8.12/admin/functions/series.php#L1682).
 
 #HSLIDE
 
@@ -49,7 +53,7 @@ Allows you to write tests that interact with a real database and isolate code th
 
 ### HostedTestCase
 
-Bootstraps the application, including required global state, global functions, and services like memcache. Use if you need to use global functions but don't need to set up any fixtures.
+Bootstraps the application, including required global state, global functions, and services like memcache. Use if you need to use global functions and the database but don't need DBUnit or fixtures.
 
 ### HostedDbTestCase
 
@@ -70,7 +74,7 @@ Tests using these classes aren't _really_ unit tests. They're not exactly integr
 3. Verify outcome
 4. Teardown
 
-However, it won't actually truncate everything in the database for you, so make sure you define empty tables for anything you're expecting to be empty.
+** DBUnit won't actually truncate everything in the database for you, so make sure you define empty tables for anything you're expecting to be empty.
 
 #HSLIDE
 
@@ -89,7 +93,11 @@ YAML is your friend. No need to write any models.
 
 ### Test Fixtures for Initial State
 
-Every test that extends `HostedDbTestCase` needs to set a `$fixturePath`. The test class will look for and automatically load either a fixture named after the test method currently being run (myTestMethod.yml) or after the test class (MyTestClass.yml).
+Every test that extends `HostedDbTestCase` needs to set a `$fixturePath`. The test class will look for and automatically load either:
+ - `myTestMethod.yml`: fixture named after the test method currently being run
+ - `MyTestClass.yml`: fixture after the test class
+
+If for some reason you need DBUnit but don't need a fixture or want to do something weird, you can override `getDataset`.
 
 #HSLIDE
 
@@ -137,12 +145,22 @@ $expectedDataset = new PHPUnit_Extensions_Database_DataSet_YamlDataSet(
 );
 
 static::assertTablesEqual($expectedDataset->getTable("em_fb_audience"), $actualDataset);
+
+$this->assertEquals(4, $this->getConnection()->getRowCount("em_fb_audience"));
 ```
 
 @[1-4](You can query the database to create a dataset DBUnit understands)
 @[6-8](You can also load fixtures to use for comparisons)
-@[10](The test class includes functions for comparing these datasets)
-@[1-10](This is extremely useful for testing state that normally isn't exposed in the API.)
+@[10-12](The test class includes functions for comparing these datasets)
+@[1-12](This is extremely useful for testing state that normally isn't exposed in the API.)
+
+#HSLIDE
+
+### Running tests
+
+1. Automatically with `composer test`
+2. Manually with `vendor/bin/phpunit <filename>`
+3. In PHPStorm (with xdebug support)
 
 #HSLIDE
 

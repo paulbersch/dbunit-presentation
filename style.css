@@ -1,14 +1,19 @@
 pre code.hljs {
-    font-size: .8em;
-    line-height: 1em;
+    font-size: 1em;
+    line-height: 1.1em;
+}
+
+.reveal .present {
+/*    margin-top: -10% !important;
+    width: 90% !important;
+    height: 80% !important;
+*/
 }
 
 .reveal .slides {
-    width: 100% !important;
-    height: 100% !important;
 }
 
 .reveal pre code {
-    max-height: 100% !important;
-    min-height: 100% !important;
+    max-height: 450px !important;
+    max-width: 900px !important;
 }

@@ -176,40 +176,41 @@ Let's look at an example!
 
 Provides a path towards eliminating globally defined resources and testing code that is untestable 
 
-```
+#HSLIDE
+
+Making untestable code testable
+
+```php
 function global_function_do_a_facebook_thing($myData) {
         $deepDataClient = new DeepDataClient();
         return $deepDataClient->doAFacebookThing($myData);
 }
-```
 
-```
 function global_function_do_a_facebook_thing($myData) {
         $deepDataClient = $container->get(DeepDataClient::class);
         return $deepDataClient->doAFacebookThing($myData);
 }
 
-// production-config.php
 [
         // technically this is redundant because of autowiring
         DeepDataClient::class => DI\Object(DeepDataClient::class)
 ]
 
-// in a test
 $builder = new DI\ContainerBuilder();
 $container = $builder->build();
 
 $mockedDeepDataClient = $this->createMock(DeepDataClient::class);
 $container->set(DeepDataClient::class, $mockedDeepDataClient);
-
-// now when the function runs, it will get the mock!
-
-
 ```
+
+@[1-4](Basically impossible to test!)
+@[6-9](Still not great, but possible to test)
+@[11-15](Config in production)
+@[16-20](Now when the function runs, we'll get a mock instead of the real class)
 
 #HSLIDE
 
-Old code
+Moving away from global resources
 
 ```php
 public static $_static_table  = "_account.accounts";
@@ -233,14 +234,17 @@ public static function myself() {
 }
 ```
 
+@[1](Account table isn't set up locally)
+@[3-10](Workarounds and globals for different environments)
+@[12-19](Using globals as a cache)
+
 #VSLIDE
 
-New code (maybe)
+Just an example, don't @ me
 
 ```php
 [
         Account::class => DI\Factory(function ($row) {
-                // you can easily change this config in a test context
                 return new Account($row);
         })->parameter('row', DI\get('domain')),
         'domain' => [
@@ -259,13 +263,21 @@ New code (maybe)
         ]
 ]
 
-// by default this is a singleton, you'll always get the same instance
 $account = $container->get(Account::class);
 ```
+
+@[2-4](Factory method can be written to encapsulate how to build an object)
+@[5-18](Can define data in the container as well)
+@[21](By default this is a singleton, you'll always get the same instance)
+@[1-21](By defining different configs in tests, we can very easily replace any of this with mocks)
 
 #HSLIDE
 
 ### How should I test this?
+
+PHPUnit/DBUnit will be merged in as soon as someone clicks merge on my PR.
+
+PHP-DI Container will be coming along with tests for automations.
 
 1. For new code, write testable classes with injected dependencies, and unit test them.
 2. For v3 API endpoints, write Behat tests and consider unit tests for business logic.
